@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Matching</title>
+    <style>
+        .container {
+            width: 800px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        .nav-links {
+            margin: 20px 0;
+        }
+        .nav-links a {
+            margin: 0 10px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #4CAF50;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Job Matching</h1>
+        <div class="nav-links">
+            <a href="{% url 'register' %}">Register</a>
+            <a href="{% url 'login' %}">Login</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'preferences' %}">Set Preferences</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

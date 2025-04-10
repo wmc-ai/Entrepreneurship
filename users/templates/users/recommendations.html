@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .job-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .job-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .job-info {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .job-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .job-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+        }
+        .view-button {
+            background-color: #3498db;
+            color: white;
+        }
+        .apply-button {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .save-button {
+            background-color: #f39c12;
+            color: white;
+        }
+        .feedback-form {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .rating-select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recommended Jobs for You</h1>
+
+        {% for job in jobs %}
+            <div class="job-card">
+                <div class="job-title">{{ job.title }}</div>
+                <div class="job-info">
+                    <strong>Salary:</strong> ${{ job.salary }} |
+                    <strong>Location:</strong> {{ job.location }}
+                </div>
+                <div class="job-description">{{ job.description|truncatechars:150 }}</div>
+                <div class="job-actions">
+                    <a href="{% url 'job_detail' job.id %}" class="button view-button">View Details</a>
+                    <a href="{% url 'apply_job' job.id %}" class="button apply-button">Apply Now</a>
+                    <a href="{% url 'save_job' job.id %}" class="button save-button">Save Job</a>
+                </div>
+
+                <div class="feedback-form">
+                    <form method="post" action="{% url 'job_feedback' job.id %}">
+                        {% csrf_token %}
+                        <select name="feedback" class="rating-select">
+                            <option value="1">1 - Poor match</option>
+                            <option value="2">2 - Fair match</option>
+                            <option value="3" selected>3 - Good match</option>
+                            <option value="4">4 - Very good match</option>
+                            <option value="5">5 - Excellent match</option>
+                        </select>
+                        <button type="submit" class="button">Rate this recommendation</button>
+                    </form>
+                </div>
+            </div>
+        {% empty %}
+            <p>No job recommendations available at the moment. Please update your preferences.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

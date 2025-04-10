@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set Your Preferences</title>
+    <style>
+        .form-container {
+            width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Set Your Job Preferences</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Salary Range</label>
+                <input type="number" name="min_salary" placeholder="Minimum Salary">
+                <input type="number" name="max_salary" placeholder="Maximum Salary">
+            </div>
+            <div class="form-group">
+                <label>Preferred Locations</label>
+                <input type="text" name="locations" placeholder="Enter locations (comma separated)">
+            </div>
+            <div class="form-group">
+                <label>Preferred Working Hours</label>
+                <select name="working_hours" multiple>
+                    <option value="morning">Morning (8AM-12PM)</option>
+                    <option value="afternoon">Afternoon (12PM-5PM)</option>
+                    <option value="evening">Evening (5PM-10PM)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Your Skills</label>
+                <input type="text" name="skills" placeholder="Enter your skills (comma separated)">
+            </div>
+            <button type="submit">Save Preferences</button>
+        </form>
+    </div>
+</body>
+</html>
